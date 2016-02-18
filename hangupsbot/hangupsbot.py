@@ -170,7 +170,7 @@ class HangupsBot(object):
                     self.memory.flush()
                     self.config.flush()
 
-                    sys.exit(0)
+                    return 0
                 except Exception as e:
                     logger.exception("CLIENT: unrecoverable low-level error")
                     print('Client unexpectedly disconnected:\n{}'.format(e))
@@ -961,6 +961,8 @@ def main():
                         help=_('config storage path'))
     parser.add_argument('--retries', default=5, type=int,
                         help=_('Maximum disconnect / reconnect retries before quitting'))
+    parser.add_argument('--daemon', action='store_true',
+                        help=_('If specified, the bot will reinitalize itself rather than exiting.'))
     parser.add_argument('--version', action='version', version='%(prog)s {}'.format(version.__version__),
                         help=_('show program\'s version number and exit'))
     args = parser.parse_args()
@@ -991,6 +993,12 @@ def main():
 
     # start the bot
     bot.run()
+    
+    while args.daemon:
+        del bot
+        time.sleep(30)
+        bot = HangupsBot(args.cookies, args.config, args.retries, args.memory)
+        bot.run()
 
 
 if __name__ == '__main__':
