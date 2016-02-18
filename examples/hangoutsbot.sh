@@ -48,7 +48,7 @@ ETC_DIR=/etc/$NAME
 CONF_FILE=$ETC_DIR/config.json
 MAX_RETRIES=1000 # Keep retrying for a long time
 DAEMON=/usr/local/bin/python3
-DAEMON_ARGS="hangupsbot/hangupsbot.py --log /var/log/hangoutsbot.log --cookies $ETC_DIR/cookies.json --retries=$MAX_RETRIES --memory=$ETC_DIR/memory.json --config $ETC_DIR/config.json"
+DAEMON_ARGS="hangupsbot/hangupsbot.py --log /var/log/hangoutsbot.log --cookies $ETC_DIR/cookies.json --retries=$MAX_RETRIES --daemon --memory=$ETC_DIR/memory.json --config $ETC_DIR/config.json"
 HOMEDIR=/home/pi/hangoutsbot # Edit if different on your Raspberry Pi
 PIDFILE=$RUN_DIR/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
