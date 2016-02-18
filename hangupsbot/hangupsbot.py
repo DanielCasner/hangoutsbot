@@ -994,11 +994,9 @@ def main():
     # start the bot
     bot.run()
     
-    while args.daemon:
-        del bot
-        time.sleep(30)
-        bot = HangupsBot(args.cookies, args.config, args.retries, args.memory)
-        bot.run()
+    if args.daemon:
+        # Reinvoke ourselves replacing our current process under the same PID
+        os.execv(sys.executable, [os.path.split(sys.executable)[-1]] + sys.argv)
 
 
 if __name__ == '__main__':
