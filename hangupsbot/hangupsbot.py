@@ -995,8 +995,12 @@ def main():
     bot.run()
     
     if args.daemon:
+        logger.debug("Not exiting because in daemon mode")
+        time.sleep(600)
+        argv = [os.path.split(sys.executable)[-1]] + sys.argv
+        logger.debug("Reinvoking interpreter \"{}\" with: {}".format(sys.executable, argv))
         # Reinvoke ourselves replacing our current process under the same PID
-        os.execv(sys.executable, [os.path.split(sys.executable)[-1]] + sys.argv)
+        os.execv(sys.executable, argv)
 
 
 if __name__ == '__main__':
